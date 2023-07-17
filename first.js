@@ -17,4 +17,6 @@ let Title=document.querySelector('.title');
 Title.style.fontWeight='bold';
 Title.style.color='green';
 
+let can=document.getElementsByClassName('list-group-item');
+can[2].style.backgroundColor='green'
 
