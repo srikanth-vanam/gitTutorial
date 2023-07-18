@@ -23,9 +23,19 @@ console.log(newLi.length);
 for(let i=0;i<newLi.length;i++){
     newLi[i].style.backgrounColor='red';
 }
-console.log("background is changed to red by using tagname");
-let Li=document.getElementsByTagName('li');
-console.log(Li.length);
-for (let index = 0; index < Li.length; index++) {
-    Li[index].style.backgroundColor='red';
-}
+// console.log("background is changed to red by using tagname");
+// let Li=document.getElementsByTagName('li');
+// console.log(Li.length);
+// for (let index = 0; index < Li.length; index++) {
+//     Li[index].style.backgroundColor='red';
+// }
+
+// 6th question
+// Li[1].style.backgroundColor='green'
+// console.log("TEXT color is green")
+// Li[2].style.display='none'
+
+let liTag=document.querySelectorAll('.list-group-item:nth-child(odd)')
+liTag.forEach(element => {
+    element.style.backgroundColor='green'
+});
