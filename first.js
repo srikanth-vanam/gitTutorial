@@ -35,7 +35,41 @@ for(let i=0;i<newLi.length;i++){
 // console.log("TEXT color is green")
 // Li[2].style.display='none'
 
-let liTag=document.querySelectorAll('.list-group-item:nth-child(odd)')
-liTag.forEach(element => {
-    element.style.backgroundColor='green'
-});
+// let liTag=document.querySelectorAll('.list-group-item:nth-child(odd)')
+// liTag.forEach(element => {
+//     element.style.backgroundColor='green'
+// });
+
+// parentNode and Element
+let Item=document.querySelector('#items');
+console.log(Item.parentNode);
+console.log(Item.parentElement);
+//childNodes
+console.log(Item.childNodes);
+console.log(Item.children);
+Item.children[1].style.backgroundColor='yellow'
+//firstChild , firstElementChild & lastChild / ElememtChild
+console.log(Item.firstChild)
+console.log(Item.firstElementChild)
+console.log(Item.lastChild)
+console.log(Item.lastElementChild)
+//sibblings
+console.log(Item.nextSibling);
+console.log(Item.nextElementSibling);
+console.log(Item.previousSibling);
+console.log(Item.previousElementSibling);
+// Creatng Element
+//Adding Hello in header
+let newDiv=document.createElement('div');
+console.log(newDiv);
+let container=document.querySelector('header .container');
+let h1=document.querySelector('header h1');
+let newText=document.createTextNode('Hello');
+newDiv.appendChild(newText);
+console.log(newDiv);
+container.insertBefore(newDiv,h1);
+// Adding hello in List-Items
+let ulItems=document.querySelector('#items');
+let li1=document.querySelector('.list-group-item');
+let hello=document.createTextNode('Hello'); 
+ulItems.insertBefore(hello,li1);
