@@ -71,3 +71,13 @@ function itemsFilter(e){
         }
     })
 }
+
+// 10th question
+let formId=document.getElementById('addForm');
+formId.addEventListener('submit',(e)=>{
+    e.preventDefault();
+    let key=document.getElementById('item').value;
+    let Value=document.getElementById('discription').value;
+    localStorage.setItem(key,Value);
+    console.log(key,Value);
+})
