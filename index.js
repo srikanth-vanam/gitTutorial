@@ -7,9 +7,9 @@ function onSubmit(e) {
   e.preventDefault();
 
   // Get form input values
-  const username = document.getElementById('username').value;
-  const email = document.getElementById('email').value;
-  const phoneNumber = document.getElementById('number').value;
+  var username = document.getElementById('username').value;
+  var email = document.getElementById('email').value;
+  var phoneNumber = document.getElementById('number').value;
 
     console.log('Uname:', username);
     console.log('email:', email);
@@ -33,10 +33,14 @@ function onSubmit(e) {
 
   // 13th question --> adding delete button to li content
   const deleteBtn = document.createElement('button');
-  deleteBtn.textContent='Delete';
+  deleteBtn.appendChild(document.createTextNode('Delete'));
   deleteBtn.id='deleter';
   list.appendChild(deleteBtn);
-
+  // 14th question -> edit btn feature
+  const editBtn=document.createElement('button');
+  editBtn.textContent='edit';
+  editBtn.id='edit'
+  list.appendChild(editBtn); 
   // Clear input fields after submission
   document.getElementById('username').value = '';
   document.getElementById('email').value = '';
@@ -47,10 +51,18 @@ var del=document.getElementById('details');
 del.addEventListener('click',deletItem);
 function deletItem(e){
     let parent=e.target.parentElement;
-    let array=e.target.parentElement.textContent.split('-');
-    // console.log(array);
+    var array=e.target.parentElement.textContent.split('-');
     let key=array[1].trim();
+    var arr=JSON.parse(localStorage.getItem(key));
+    console.log(arr);
     localStorage.removeItem(key);
     del.removeChild(parent);
     // console.log(array[1].trim());
+    // 14th question feature
+    if(e.target.id=='edit'){
+      document.getElementById('username').value = arr.name;
+      document.getElementById('email').value = arr.email;
+      document.getElementById('number').value = arr.phone;
+      console.log("inside the edit one");
+    }
 }
