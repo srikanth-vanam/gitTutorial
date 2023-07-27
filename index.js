@@ -1,6 +1,39 @@
 const form = document.getElementById('formId');
 const detailsDiv = document.getElementById('details');
 
+// on refresh get data from crudCrud and Using showOutput() to add li tag on page
+window.addEventListener('DOMContentLoaded',()=>{
+  axios
+    .get('https://crudcrud.com/api/51e7dff7cbef45caabaed2bba042fd8c/appointment')
+    .then((res)=>{
+      for (let index = 0; index < res.data.length; index++) {
+         showOutput(res.data[index]);
+      }
+      console.log(res.data);
+    })
+    .catch( (err)=> console.log(err))
+})
+
+function showOutput(object){
+  const list = document.createElement('li');
+  list.textContent = `${object.name} - ${object.email} - ${object.phone}`;
+  // Append the paragraph element to the "details" div
+  detailsDiv.appendChild(list);
+
+  //  adding delete button to li content
+  const deleteBtn = document.createElement('input');
+  deleteBtn.id='deleter';
+  deleteBtn.type="button";
+  deleteBtn.value="Delete";
+  list.appendChild(deleteBtn);
+  //  edit btn feature
+  const editBtn=document.createElement('input');
+  editBtn.id='edit';
+  editBtn.type='button';
+  editBtn.value='edit';
+  list.appendChild(editBtn); 
+}
+
 form.addEventListener('submit', onSubmit);
 
 function onSubmit(e) {
@@ -21,42 +54,25 @@ function onSubmit(e) {
     phone: phoneNumber,
   };
 
-  // Store the object in local storage with the email as the key
-  // localStorage.setItem(email, JSON.stringify(formData));
   function saveToCrud(){
     axios
       .post('https://crudcrud.com/api/51e7dff7cbef45caabaed2bba042fd8c/appointment',formData)
-      .then((res)=>console.log(res))
+      .then((res)=>console.log(res.data))
       .catch( (err)=> console.log(err));
 
   }
   saveToCrud();
-  // Create a new paragraph element and set its content to the form data
-  const list = document.createElement('li');
-  list.textContent = `${username} - ${email} - ${phoneNumber}`;
-
-  // Append the paragraph element to the "details" div
-  detailsDiv.appendChild(list);
-
-  // 13th question --> adding delete button to li content
-  const deleteBtn = document.createElement('input');
-  deleteBtn.id='deleter';
-  deleteBtn.type="button";
-  deleteBtn.value="Delete";
-  list.appendChild(deleteBtn);
-  // 14th question -> edit btn feature
-  const editBtn=document.createElement('input');
-  editBtn.id='edit';
-  editBtn.type='button';
-  editBtn.value='edit';
-  list.appendChild(editBtn); 
+  // showOutput will create li tag and add data on html page
+  showOutput(formData);
   // Clear input fields after submission
   document.getElementById('username').value = '';
   document.getElementById('email').value = '';
   document.getElementById('number').value = '';
 }
 
-var del=document.getElementById('details');
+// below code not need for this task.......
+///////
+// var del=document.getElementById('details');
 // del.addEventListener('click',deletItem);
 function deletItem(e){
     let parent=e.target.parentElement;
