@@ -22,8 +22,15 @@ function onSubmit(e) {
   };
 
   // Store the object in local storage with the email as the key
-  localStorage.setItem(email, JSON.stringify(formData));
+  // localStorage.setItem(email, JSON.stringify(formData));
+  function saveToCrud(){
+    axios
+      .post('https://crudcrud.com/api/51e7dff7cbef45caabaed2bba042fd8c/appointment',formData)
+      .then((res)=>console.log(res))
+      .catch( (err)=> console.log(err));
 
+  }
+  saveToCrud();
   // Create a new paragraph element and set its content to the form data
   const list = document.createElement('li');
   list.textContent = `${username} - ${email} - ${phoneNumber}`;
@@ -32,14 +39,16 @@ function onSubmit(e) {
   detailsDiv.appendChild(list);
 
   // 13th question --> adding delete button to li content
-  const deleteBtn = document.createElement('button');
-  deleteBtn.appendChild(document.createTextNode('Delete'));
+  const deleteBtn = document.createElement('input');
   deleteBtn.id='deleter';
+  deleteBtn.type="button";
+  deleteBtn.value="Delete";
   list.appendChild(deleteBtn);
   // 14th question -> edit btn feature
-  const editBtn=document.createElement('button');
-  editBtn.textContent='edit';
-  editBtn.id='edit'
+  const editBtn=document.createElement('input');
+  editBtn.id='edit';
+  editBtn.type='button';
+  editBtn.value='edit';
   list.appendChild(editBtn); 
   // Clear input fields after submission
   document.getElementById('username').value = '';
@@ -48,7 +57,7 @@ function onSubmit(e) {
 }
 
 var del=document.getElementById('details');
-del.addEventListener('click',deletItem);
+// del.addEventListener('click',deletItem);
 function deletItem(e){
     let parent=e.target.parentElement;
     var array=e.target.parentElement.textContent.split('-');
