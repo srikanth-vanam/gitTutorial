@@ -4,7 +4,7 @@ const detailsDiv = document.getElementById('details');
 // on refresh get data from crudCrud and Using showOutput() to add li tag on page
 window.addEventListener('DOMContentLoaded',()=>{
   axios
-    .get('https://crudcrud.com/api/51e7dff7cbef45caabaed2bba042fd8c/appointment')
+    .get('https://crudcrud.com/api/47feaa5cf936419abd3dc565403108c5/appointment')
     .then((res)=>{
       for (let index = 0; index < res.data.length; index++) {
          showOutput(res.data[index]);
@@ -56,7 +56,7 @@ function onSubmit(e) {
 
   function saveToCrud(){
     axios
-      .post('https://crudcrud.com/api/51e7dff7cbef45caabaed2bba042fd8c/appointment',formData)
+      .post('https://crudcrud.com/api/47feaa5cf936419abd3dc565403108c5/appointment',formData)
       .then((res)=>console.log(res.data))
       .catch( (err)=> console.log(err));
 
@@ -70,24 +70,38 @@ function onSubmit(e) {
   document.getElementById('number').value = '';
 }
 
-// below code not need for this task.......
-///////
-// var del=document.getElementById('details');
-// del.addEventListener('click',deletItem);
-function deletItem(e){
+var del=document.getElementById('details');
+del.addEventListener('click',deleteItem);
+// to delete based on id 
+// first using GET to get id 
+// second using DELETE to delete based on matched id
+function deleteItem(e){
     let parent=e.target.parentElement;
     var array=e.target.parentElement.textContent.split('-');
-    let key=array[1].trim();
-    var arr=JSON.parse(localStorage.getItem(key));
-    console.log(arr);
-    localStorage.removeItem(key);
+    // console.log("array is",array);
+    var urlId;
+    // GET to get id by using email via traversing the obj's array
+    axios
+    .get('https://crudcrud.com/api/47feaa5cf936419abd3dc565403108c5/appointment')
+    .then((res)=>{
+      // console.log("inside get axios");
+      for (let index = 0; index < res.data.length; index++) {
+        if(res.data[index].email==array[1].trim()){
+            // console.log("inside get axios1");
+            urlId=res.data[index]._id;
+            // console.log("url obj id is:",urlId);
+         }
+      }
+      // // to delete from crudcrud
+      const options={
+        method:'delete',
+        url:'https://crudcrud.com/api/47feaa5cf936419abd3dc565403108c5/appointment/'+urlId,
+      }
+      axios(options)
+      .then((res)=>console.log(res,"deleted successfully"))
+      .catch((err)=>console.log(err));
+    })
+    .catch((err)=>console.log(err));
     del.removeChild(parent);
-    // console.log(array[1].trim());
-    // 14th question feature
-    if(e.target.id=='edit'){
-      document.getElementById('username').value = arr.name;
-      document.getElementById('email').value = arr.email;
-      document.getElementById('number').value = arr.phone;
-      console.log("inside the edit one");
-    }
+    
 }
