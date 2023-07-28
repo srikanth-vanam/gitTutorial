@@ -1,10 +1,11 @@
-let form=document.getElementById('formId');
+// count variable for adding product price
 var count=0;
-var totalValue=0;
 let totalPrice=document.getElementById('totalPrice');
+//
+let form=document.getElementById('formId');
 form.addEventListener('submit',onSubmit);
 
-// show Output function
+// show Output function  displays the data on html page
 function showOutput(obj){
     let ul=document.getElementById('listItems');
     // creating list
@@ -16,8 +17,9 @@ function showOutput(obj){
     delBtn.id='delete';
     delBtn.value='Delete';
     delBtn.type='button';
-
+    // adding del input to list
     list.appendChild(delBtn);
+    // adding list to 'ul' 
     ul.appendChild(list);
 }
 
@@ -31,11 +33,13 @@ function getDetails(){
         .then((res)=>{
             // here we get "res.data" in form of array of objects so, we have to traverse.
             for (let index = 0; index < res.data.length; index++) {
-                // passing each object of res array to showoutput 
-                // showOutput displays the data on html page
+                // sum to add price of each product
                 sum=sum+Number.parseInt(res.data[index].price);
+                // passing each object of res array to showoutput 
                 showOutput(res.data[index]);
+                // adding sum to display it on html page
                 totalPrice.textContent='Rs:-'+sum;
+                // storing sum in count variable
                 count=sum;
             }
         })
@@ -57,14 +61,9 @@ function onSubmit(e){
     postMethod(formData);
     //calling showOutput method
     showOutput(formData);
-    // adding total price of products
-    // if( sum==0){
-    count=count+Number.parseInt(formData.price);    
-    // }
-    // else if(sum !=0){
-    //     count=Number.parseInt(formData.price)+sum;
-    // }
-    // var value=sum+count;
+    // adding count after adding new data to server
+    count=count+Number.parseInt(formData.price);  
+    // adding sum to display it on html page
     totalPrice.textContent='Rs:-'+count;
 
     function postMethod(obj){
@@ -73,21 +72,26 @@ function onSubmit(e){
             .then((res)=>console.log(res))
             .catch((err)=>console.log(err));
     }   
+    // making input fields empty
     document.getElementById('price').value="";
     document.getElementById('product').value="";
 
 }
 
+// delete event to delete data from server and also from html page
 let ulList=document.getElementById('listItems')
 ulList.addEventListener('click',onDelete);
+
 function onDelete(e){
     let listItem=e.target.parentElement;
     const objArray=listItem.textContent.split('-');
+    // stores id if found
     var urlAdder;
-    console.log(objArray);
+    // deletes from html page
     ulList.removeChild(listItem);
     // deletes price value;
     count=count-Number.parseInt(objArray[0].trim());
+    // adding sum to display it on html page
     totalPrice.textContent='Rs:-'+count;
     // get api to search in server
     axios
@@ -95,8 +99,7 @@ function onDelete(e){
         .then((res)=>{
             for (let index = 0; index < res.data.length; index++) {
                 if(res.data[index].price == objArray[0].trim() && res.data[index].product == objArray[1].trim()){
-                    urlAdder=res.data[index]._id;
-                    console.log("id is:",urlAdder);
+                    urlAdder=res.data[index]._id;// storing id in urlAdder
                 }
             }
             // delete api
