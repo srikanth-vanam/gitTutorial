@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3hr-Dynamic Task</title>
+</head>
+<body>
+    <div id="container">
+        <form action="#" id="formId">
+            <label for="price">Product Price</label>
+            <input type="number" id="price" name="productPrice">
+            <label for="product">Choose Product</label>
+            <input type="text" name="ChooseProduct" id="product">
+            <input type="submit"  id="addProduct" value="Add-Product">
+        </form>
+    </div>
+    <h4>Total Products</h4>
+    <ul id="listItems"></ul>
+    <div>
+        <p>The Total value of the products is: <span id="totalPrice"></span> <p>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+    <script src="3hrTask.js"></script>
+</body>
+</html>
